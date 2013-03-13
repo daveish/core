@@ -1,5 +1,6 @@
 /**
  * Copyright (c) 2011, Robin Appelman <icewind1991@gmail.com>
+ *               2013, Morris Jobke <morris.jobke@gmail.com>
  * This file is licensed under the Affero General Public License version 3 or later.
  * See the COPYING-README file.
  */
@@ -109,6 +110,17 @@ $(document).ready(function(){
 			}
 		});
 		return false;
+	});
+
+	$('#pass2').strengthify({
+		zxcvbn: OC.linkTo('3rdparty','zxcvbn/js/zxcvbn.js'),
+		titles: [
+			t('core', 'Weakest'),
+			t('core', 'Weak'),
+			t('core', 'So-so'),
+			t('core', 'Good'),
+			t('core', 'Perfect')
+		]
 	});
 } );
 
