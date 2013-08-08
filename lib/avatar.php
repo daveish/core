@@ -28,6 +28,8 @@ class OC_Avatar {
 			return \OC_Avatar::getGravatar($user, $size);
 		} elseif ($mode === "local") {
 			return \OC_Avatar::getLocalAvatar($user, $size);
+		} elseif ($mode === "custom") {
+			return \OC_Avatar::getCustomAvatar($user, $size);
 		}
 	}
 
@@ -56,15 +58,14 @@ class OC_Avatar {
 			return true;
 		} else {
 			$img = new OC_Image($data);
-			// FIXME this always says "image/png", when loading from data
 			$type = substr($img->mimeType(), -3);
 			if ($type === 'peg') { $type = 'jpg'; }
 			if ($type !== 'jpg' && $type !== 'png') {
-				throw new Exception();
+				throw new Exception("Unknown filetype for avatar");
 			}
 
 			if (!( $img->valid() && ($img->height() === $img->width()) )) {
-				throw new Exception();
+				throw new Exception("Invalid image, or the provided image is not square");
 			}
 
 			$view->unlink('avatar.jpg');
@@ -111,6 +112,13 @@ class OC_Avatar {
 		$avatar = new OC_Image($view->file_get_contents('avatar.'.$type));
 		$avatar->resize($size);
 		return \OC_Avatar::wrapIntoImg((string)$avatar, $type);
+	}
+
+	/**
+	 *
+	*/
+	public static function getCustomAvatar($user, $size) {
+		// TODO
 	}
 
 	/**

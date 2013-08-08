@@ -50,9 +50,7 @@ function selectAvatar (path) {
 }
 
 function updateAvatar () {
-	$.post(OC.filePath('core', 'ajax', 'getavatar.php'), {user: OC.currentUser, size: 128}, function(data){
-		$('#avatar img').attr('src', data.data);
-	});
+	$('#avatar img').attr('src', OC.filePath('', '', 'avatar.php?user='+OC.currentUser+'&size=128'));
 }
 
 $(document).ready(function(){
@@ -122,11 +120,12 @@ $(document).ready(function(){
 		return false;
 	});
 
-	$('#uploadavatar').click(function(){
+	$('#uploadavatar').fileupload();
+/*	$('#uploadavatar').click(function(){
 		alert('To be done');
 		updateAvatar();
 	});
-
+*/
 	$('#selectavatar').click(function(){
 		OC.dialogs.filepicker(t('settings', "Select an avatar"), selectAvatar, false, "image");
 	});
